@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProdukRequest;
+use App\Models\OpsiPengiriman;
 use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -77,5 +78,32 @@ class ProdukController extends Controller {
         return response()->json([
             'message' => 'Berhasil menghapus data',
         ]);
+    }
+
+    public function estimasiHarga(Request $request) {
+        $opsi = OpsiPengiriman::with(['items'])->get()->map(function ($a) use ($request) {
+            // Berat
+            $items = $a->items->where('satuan_barang_id', $request->satuan_berat_id);
+            if (count($items)) {
+                $item = $items->filter(function ($i) use ($request) {
+                    if ($i->to_berat) return $i->from_berat < $request->berat && $i->to_berat >= $request->berat;
+                    else return $i->from_berat < $request->berat;
+                })->first();
+
+                if ($item) {
+                    $a->harga_berat = $request->berat * $item->nominal;
+                }
+            }
+
+            // Volume
+            $item = $a->items->where('satuan_barang_id', $request->satuan_volume_id)->first();
+            if ($item) {
+                $a->harga_volume = $request->volume * $item->nominal;
+            }
+
+            $a->makeHidden(['items']);
+            return $a;
+        });
+        return $opsi;
     }
 }

@@ -88,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['prefix' => 'data', 'middleware' => 'role:admin'], function () {
         Route::group(['prefix' => 'produk'], function () {
+            Route::post('estimasi-harga', [ProdukController::class, 'estimasiHarga']);
             Route::get('show', [ProdukController::class, 'show']);
             Route::post('paginate', [ProdukController::class, 'paginate']);
             Route::post('store', [ProdukController::class, 'store']);

@@ -8,6 +8,9 @@ import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import { useSatuanBarang } from "@/services";
 import FileUpload from "../../components/FileUpload";
+import { If } from "react-haiku";
+import Skeleton from "react-loading-skeleton";
+import { currency } from "@/libs/utils";
 
 function Form({ close, selected }) {
   const queryClient = useQueryClient();
@@ -80,6 +83,34 @@ function Form({ close, selected }) {
     [satuans]
   );
 
+  const volume = useMemo(() => {
+    return watch("volume_p") * watch("volume_l") * watch("volume_t");
+  }, [watch("volume_p"), watch("volume_l"), watch("volume_t")]);
+
+  const { data: estimasiHarga = [], isFetching: isHargaFetching } = useQuery({
+    queryKey: [
+      "estimasi-harga",
+      watch("satuan_berat_id"),
+      watch("satuan_volume_id"),
+      watch("berat"),
+      volume,
+    ],
+    queryFn: () =>
+      axios
+        .post("/data/produk/estimasi-harga", {
+          satuan_berat_id: watch("satuan_berat_id"),
+          satuan_volume_id: watch("satuan_volume_id"),
+          berat: watch("berat"),
+          volume,
+        })
+        .then((res) => res.data),
+    enabled:
+      Boolean(watch("satuan_berat_id")) &&
+      Boolean(watch("satuan_volume_id")) &&
+      Boolean(watch("berat")) &&
+      Boolean(volume),
+  });
+
   return (
     <form
       className="card mb-12"
@@ -117,6 +148,9 @@ function Form({ close, selected }) {
                 labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
                 acceptedFileTypes={["image/*"]}
               />
+              {errors?.gambar && (
+                <label className="label-error">{errors.gambar.message}</label>
+              )}
             </div>
           </div>
           <div className="col-12">
@@ -299,6 +333,49 @@ function Form({ close, selected }) {
               </div>
             </div>
           </div>
+          <If isTrue={Boolean(estimasiHarga.length)}>
+            <If isTrue={!isHargaFetching}>
+              <div className="col-12">
+                <div className="card d-flex flex-row shadow-none rounded-3 overflow-hidden">
+                  <div
+                    className="d-flex justify-content-center align-items-center bg-light-primary"
+                    style={{ width: "30%", height: "200px" }}
+                  >
+                    <h4>Estimasi Harga</h4>
+                  </div>
+                  <div
+                    className="d-flex align-items-center bg-light-primary gap-5"
+                    style={{ width: "70%", height: "200px" }}
+                  >
+                    <div>
+                      <h5 className="mb-3">Berat</h5>
+                      {estimasiHarga.map((opsi) => (
+                        <div className="mb-2">
+                          <strong>{opsi.nama}</strong>:{" "}
+                          <span>{currency(opsi.harga_berat)}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <br />
+                    <div>
+                      <h5 className="mb-3">Volume</h5>
+                      {estimasiHarga.map((opsi) => (
+                        <div className="mb-2">
+                          <strong>{opsi.nama}</strong>:{" "}
+                          <span>{currency(opsi.harga_volume)}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </If>
+          </If>
+          <If isTrue={isHargaFetching}>
+            <div className="col-12">
+              <Skeleton height={200} width="100%" />
+            </div>
+          </If>
           <div className="col-12">
             <button
               type="submit"
