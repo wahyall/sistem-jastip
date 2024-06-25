@@ -6,6 +6,7 @@ use App\Http\Controllers\KategoriBarangController;
 use App\Http\Controllers\KomplainController;
 use App\Http\Controllers\LayananOngkirController;
 use App\Http\Controllers\OngkirController;
+use App\Http\Controllers\OpsiPengirimanController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PenerimaController;
 use App\Http\Controllers\PengirimanController;
@@ -104,6 +105,15 @@ Route::middleware(['auth'])->group(function () {
             Route::get('{uuid}/edit', [SatuanBarangController::class, 'edit']);
             Route::post('{uuid}/update', [SatuanBarangController::class, 'update']);
             Route::delete('{uuid}/destroy', [SatuanBarangController::class, 'destroy']);
+        });
+
+        Route::group(['prefix' => 'opsi-pengiriman'], function () {
+            Route::get('show', [OpsiPengirimanController::class, 'show']);
+            Route::post('paginate', [OpsiPengirimanController::class, 'paginate']);
+            Route::post('store', [OpsiPengirimanController::class, 'store']);
+            Route::get('{uuid}/edit', [OpsiPengirimanController::class, 'edit']);
+            Route::post('{uuid}/update', [OpsiPengirimanController::class, 'update']);
+            Route::delete('{uuid}/destroy', [OpsiPengirimanController::class, 'destroy']);
         });
     });
 
