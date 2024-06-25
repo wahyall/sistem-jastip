@@ -10,6 +10,7 @@ use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PenerimaController;
 use App\Http\Controllers\PengirimanController;
 use App\Http\Controllers\PengirimController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\SatuanBarangController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\UserController;
@@ -86,22 +87,13 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['prefix' => 'data', 'middleware' => 'role:admin'], function () {
-        Route::group(['prefix' => 'pengirim'], function () {
-            Route::get('show', [PengirimController::class, 'show']);
-            Route::post('paginate', [PengirimController::class, 'paginate']);
-            Route::post('store', [PengirimController::class, 'store']);
-            Route::get('{uuid}/edit', [PengirimController::class, 'edit']);
-            Route::post('{uuid}/update', [PengirimController::class, 'update']);
-            Route::delete('{uuid}/destroy', [PengirimController::class, 'destroy']);
-        });
-
-        Route::group(['prefix' => 'penerima'], function () {
-            Route::get('show', [PenerimaController::class, 'show']);
-            Route::post('paginate', [PenerimaController::class, 'paginate']);
-            Route::post('store', [PenerimaController::class, 'store']);
-            Route::get('{uuid}/edit', [PenerimaController::class, 'edit']);
-            Route::post('{uuid}/update', [PenerimaController::class, 'update']);
-            Route::delete('{uuid}/destroy', [PenerimaController::class, 'destroy']);
+        Route::group(['prefix' => 'produk'], function () {
+            Route::get('show', [ProdukController::class, 'show']);
+            Route::post('paginate', [ProdukController::class, 'paginate']);
+            Route::post('store', [ProdukController::class, 'store']);
+            Route::get('{uuid}/edit', [ProdukController::class, 'edit']);
+            Route::post('{uuid}/update', [ProdukController::class, 'update']);
+            Route::delete('{uuid}/destroy', [ProdukController::class, 'destroy']);
         });
 
         Route::group(['prefix' => 'satuan-barang'], function () {
@@ -111,43 +103,6 @@ Route::middleware(['auth'])->group(function () {
             Route::get('{uuid}/edit', [SatuanBarangController::class, 'edit']);
             Route::post('{uuid}/update', [SatuanBarangController::class, 'update']);
             Route::delete('{uuid}/destroy', [SatuanBarangController::class, 'destroy']);
-        });
-
-        Route::group(['prefix' => 'kategori-barang'], function () {
-            Route::get('show', [KategoriBarangController::class, 'show']);
-            Route::post('paginate', [KategoriBarangController::class, 'paginate']);
-            Route::post('store', [KategoriBarangController::class, 'store']);
-            Route::get('{uuid}/edit', [KategoriBarangController::class, 'edit']);
-            Route::post('{uuid}/update', [KategoriBarangController::class, 'update']);
-            Route::delete('{uuid}/destroy', [KategoriBarangController::class, 'destroy']);
-        });
-
-        Route::group(['prefix' => 'jenis-pembayaran'], function () {
-            Route::get('show', [JenisPembayaranController::class, 'show']);
-            Route::post('paginate', [JenisPembayaranController::class, 'paginate']);
-            Route::post('store', [JenisPembayaranController::class, 'store']);
-            Route::get('{uuid}/edit', [JenisPembayaranController::class, 'edit']);
-            Route::post('{uuid}/update', [JenisPembayaranController::class, 'update']);
-            Route::delete('{uuid}/destroy', [JenisPembayaranController::class, 'destroy']);
-        });
-
-        Route::group(['prefix' => 'layanan-ongkir'], function () {
-            Route::get('show', [LayananOngkirController::class, 'show']);
-            Route::post('paginate', [LayananOngkirController::class, 'paginate']);
-            Route::post('store', [LayananOngkirController::class, 'store']);
-            Route::get('{uuid}/edit', [LayananOngkirController::class, 'edit']);
-            Route::post('{uuid}/update', [LayananOngkirController::class, 'update']);
-            Route::delete('{uuid}/destroy', [LayananOngkirController::class, 'destroy']);
-        });
-
-        Route::group(['prefix' => 'ongkir'], function () {
-            Route::post('ongkir', [OngkirController::class, 'ongkir']);
-            Route::get('show', [OngkirController::class, 'show']);
-            Route::post('paginate', [OngkirController::class, 'paginate']);
-            Route::post('store', [OngkirController::class, 'store']);
-            Route::get('{uuid}/edit', [OngkirController::class, 'edit']);
-            Route::post('{uuid}/update', [OngkirController::class, 'update']);
-            Route::delete('{uuid}/destroy', [OngkirController::class, 'destroy']);
         });
     });
 

@@ -114,7 +114,7 @@ function DashboardLayout({ children, auth: { user } }) {
           {/* begin::Aside menu */}
           <aside
             id="kt_aside"
-            className="aside aside-hoverable"
+            className="aside aside-dark aside-hoverable"
             data-kt-drawer="true"
             data-kt-drawer-name="aside"
             data-kt-drawer-activate="{default: true, lg: false}"

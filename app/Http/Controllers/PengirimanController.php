@@ -18,32 +18,14 @@ class PengirimanController extends Controller {
         $page = (($request->page) ? $request->page - 1 : 0);
 
         DB::statement(DB::raw('set @nomor=0+' . $page * $per));
-        $data = Pengiriman::with(['satuan', 'cabang', 'kategori', 'pengirim.city', 'penerima.city', 'layanan'])->where(function ($q) use ($request) {
+        $data = Pengiriman::with(['cabang', 'customer'])->where(function ($q) use ($request) {
             $q->where('resi', 'LIKE', "%$request->search%");
             $q->orWhere('status', 'LIKE', "%$request->search%");
-            $q->orWhere('total_berat', 'LIKE', "%$request->search%");
-            $q->orWhere('total_koli', 'LIKE', "%$request->search%");
-            $q->orWhere('catatan', 'LIKE', "%$request->search%");
-            $q->orWhereHas('satuan', function ($q) use ($request) {
-                $q->where('nama', 'LIKE', "%$request->search%");
-            });
             $q->orWhereHas('cabang', function ($q) use ($request) {
                 $q->where('name', 'LIKE', "%$request->search%");
             });
-            $q->orWhereHas('pengirim', function ($q) use ($request) {
-                $q->where('nama', 'LIKE', "%$request->search%");
-                $q->orWhereHas('city', function ($q) use ($request) {
-                    $q->where('name', 'LIKE', "%$request->search%");
-                });
-            });
-            $q->orWhereHas('penerima', function ($q) use ($request) {
-                $q->where('nama', 'LIKE', "%$request->search%");
-                $q->orWhereHas('city', function ($q) use ($request) {
-                    $q->where('name', 'LIKE', "%$request->search%");
-                });
-            });
-            $q->orWhereHas('layanan', function ($q) use ($request) {
-                $q->where('nama', 'LIKE', "%$request->search%");
+            $q->orWhereHas('customer', function ($q) use ($request) {
+                $q->where('name', 'LIKE', "%$request->search%");
             });
         })->when(str_contains($request->range, "to"), function ($q) use ($request) {
             $range = explode(" to ", $request->range);

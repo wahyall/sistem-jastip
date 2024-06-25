@@ -26,7 +26,7 @@ return new class extends Migration {
             $table->longText('catatan')->nullable();
 
             $table->double('harga_ekspedisi');
-            $table->foreignId('tarif_ongkir_item_id')->constrained('tarif_ongkir_items')->onDelete('restrict');
+            $table->foreignId('tarif_kurir_item_id')->constrained('tarif_kurir_items')->onDelete('restrict');
 
             $table->timestamps();
         });

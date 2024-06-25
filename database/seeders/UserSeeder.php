@@ -18,23 +18,30 @@ class UserSeeder extends Seeder {
 
         User::create([
             'name' => 'Super Admin',
-            'email' => 'admin@ardata.co.id',
+            'email' => 'admin@jastip.com',
             'password' => bcrypt('password'),
             'role' => 'admin',
         ]);
 
         User::create([
             'name' => 'Cabang Jakarta',
-            'email' => 'cabang-jakarta@ardata.co.id',
+            'email' => 'cabang-jakarta@jastip.com',
             'password' => bcrypt('password'),
             'role' => 'cabang',
         ]);
 
         User::create([
             'name' => 'Kurir Satu',
-            'email' => 'kurir-satu@ardata.co.id',
+            'email' => 'kurir-satu@jastip.com',
             'password' => bcrypt('password'),
             'role' => 'kurir',
+        ]);
+
+        User::create([
+            'name' => 'Customer Satu',
+            'email' => 'customer-satu@jastip.com',
+            'password' => bcrypt('password'),
+            'role' => 'customer',
         ]);
     }
 }

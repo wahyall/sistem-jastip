@@ -5,8 +5,6 @@ import axios from "@/libs/axios";
 
 import { toast } from "react-toastify";
 import { Controller, useForm } from "react-hook-form";
-import Select from "react-select";
-import { useProvince, useCity, useDistrict } from "@/services";
 import FileUpload from "../../components/FileUpload";
 
 function Form({ close, selected }) {

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PengirimanItem extends Model {
     use Uuid;
-    protected $fillable = ['pengiriman_id', 'produk_id', 'opsi_pengiriman_id', 'kuantitas'];
+    protected $fillable = ['pengiriman_id', 'produk_id', 'opsi_pengiriman_id', 'resi', 'kuantitas'];
 
     public function pengiriman() {
         return $this->belongsTo(Pengiriman::class);

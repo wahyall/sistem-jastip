@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class OpsiPengiriman extends Model {
     use Uuid;
-    protected $fillable = ['nama', 'berat', 'volume'];
+    protected $fillable = ['nama'];
+
+    public function items() {
+        return $this->hasMany(OpsiPengirimanItem::class, 'opsi_pengiriman_id');
+    }
 }

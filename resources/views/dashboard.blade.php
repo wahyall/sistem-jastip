@@ -23,10 +23,10 @@
             width: calc(33.33% - 0.5em);
         }
 
-        .aside {
-            background-color: #dffadf;
+        /* .aside {
+            background-color: #c3bae4;
             box-shadow: 0 0 28px 0 rgba(46, 70, 42, 0.1) !important;
-        }
+        } */
 
         .menu-state-title-primary .menu-item .menu-link.active .menu-title {
             font-weight: 600

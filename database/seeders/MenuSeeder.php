@@ -31,7 +31,7 @@ class MenuSeeder extends Seeder {
                 ]],
 
                 ['middleware' => 'role:admin,cabang', 'children' => [
-                    ['name' => 'Transaksi', 'url' => 'dashboard/transaksi', 'route' => 'dashboard.transaksi', 'component' => 'dashboard/transaksi/Index', 'icon' => 'las la-bag fs-1'],
+                    ['name' => 'Transaksi', 'url' => 'dashboard/transaksi', 'route' => 'dashboard.transaksi', 'component' => 'dashboard/transaksi/Index', 'icon' => 'las la-cart-arrow-down fs-1'],
                 ]],
 
                 ['middleware' => 'role:admin', 'children' => [
@@ -39,7 +39,7 @@ class MenuSeeder extends Seeder {
                         ['name' => 'Produk', 'url' => 'dashboard/data/produk', 'route' => 'dashboard.data.produk', 'component' => 'dashboard/data/produk/Index', 'icon' => ''],
                         ['name' => 'Satuan Barang', 'url' => 'dashboard/data/satuan-barang', 'route' => 'dashboard.data.satuan-barang', 'component' => 'dashboard/data/satuan-barang/Index', 'icon' => ''],
                         ['name' => 'Opsi Pengiriman', 'url' => 'dashboard/data/opsi-pengiriman', 'route' => 'dashboard.data.opsi-pengiriman', 'component' => 'dashboard/data/opsi-pengiriman/Index', 'icon' => ''],
-                        ['name' => 'Opsi Kurir', 'url' => 'dashboard/data/opsi-kurir', 'route' => 'dashboard.data.opsi-kurir', 'component' => 'dashboard/data/opsi-kurir/Index', 'icon' => ''],
+                        ['name' => 'Tarif Kurir', 'url' => 'dashboard/data/tarif-kurir', 'route' => 'dashboard.data.tarif-kurir', 'component' => 'dashboard/data/tarif-kurir/Index', 'icon' => ''],
                     ]],
 
                     ['name' => 'User', 'url' => 'dashboard/user', 'route' => 'dashboard.user', 'component' => 'dashboard/user/Index', 'icon' => 'las la-users fs-1', 'children' => [
