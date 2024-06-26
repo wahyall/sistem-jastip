@@ -178,9 +178,6 @@ function Form({ close, selected }) {
                       {errors.items?.[index]?.tipe.message}
                     </label>
                   )}
-                  {errors?.nama && (
-                    <label className="label-error">{errors.nama.message}</label>
-                  )}
                 </div>
                 <div className="col-2">
                   <label htmlFor="nama" className="form-label">

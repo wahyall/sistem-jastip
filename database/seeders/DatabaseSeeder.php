@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder {
         $this->call(IndonesiaDatabaseSeeder::class);
         $this->call(SatuanBarangSeeder::class);
         $this->call(OpsiPengirimanSeeder::class);
+        $this->call(TarifKurirSeeder::class);
     }
 }

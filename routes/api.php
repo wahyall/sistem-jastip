@@ -13,6 +13,7 @@ use App\Http\Controllers\PengirimanController;
 use App\Http\Controllers\PengirimController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\SatuanBarangController;
+use App\Http\Controllers\TarifKurirController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -114,6 +115,15 @@ Route::middleware(['auth'])->group(function () {
             Route::get('{uuid}/edit', [OpsiPengirimanController::class, 'edit']);
             Route::post('{uuid}/update', [OpsiPengirimanController::class, 'update']);
             Route::delete('{uuid}/destroy', [OpsiPengirimanController::class, 'destroy']);
+        });
+
+        Route::group(['prefix' => 'tarif-kurir'], function () {
+            Route::get('show', [TarifKurirController::class, 'show']);
+            Route::post('paginate', [TarifKurirController::class, 'paginate']);
+            Route::post('store', [TarifKurirController::class, 'store']);
+            Route::get('{uuid}/edit', [TarifKurirController::class, 'edit']);
+            Route::post('{uuid}/update', [TarifKurirController::class, 'update']);
+            Route::delete('{uuid}/destroy', [TarifKurirController::class, 'destroy']);
         });
     });
 
