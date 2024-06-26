@@ -11,7 +11,8 @@ class Pengiriman extends Model {
     protected $fillable = [
         'resi', 'cabang_id', 'customer_id', 'alamat_id', 'status',
         'tanggal_kirim', 'tanggal_terima', 'catatan',
-        'harga_ekspedisi', 'tarif_ongkir_item_id', 'status_bayar'
+        'opsi_pengiriman_id', 'opsi_pengiriman_item_id',
+        'harga_ekspedisi', 'tarif_kurir_item_id', 'status_bayar'
     ];
     protected $appends = ['pembayaran'];
 
@@ -31,6 +32,18 @@ class Pengiriman extends Model {
 
     public function customer() {
         return $this->belongsTo(User::class, 'customer_id');
+    }
+
+    public function opsi_pengiriman() {
+        return $this->belongsTo(OpsiPengiriman::class);
+    }
+
+    public function opsi_pengiriman_item() {
+        return $this->belongsTo(OpsiPengirimanItem::class);
+    }
+
+    public function tarif_kurir_item() {
+        return $this->belongsTo(TarifKurirItem::class);
     }
 
     public function trackings() {
