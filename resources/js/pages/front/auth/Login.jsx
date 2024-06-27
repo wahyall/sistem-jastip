@@ -37,7 +37,11 @@ const Login = ({ redirect }) => {
           }
         }
       },
-      onSuccess: ({ data }) => router.visit(data.redirect),
+      onSuccess: ({ data }) => {
+        if (data.redirect.includes("dashboard"))
+          window.location.href = data.redirect;
+        else router.visit(data.redirect);
+      },
     }
   );
 
