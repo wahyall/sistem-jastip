@@ -19,9 +19,7 @@ return new class extends Migration {
         });
 
         Schema::table('produks', function (Blueprint $table) {
-            $table->id();
             $table->dropColumn('gambar');
-            $table->timestamps();
         });
     }
 

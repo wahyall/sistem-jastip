@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends Controller {
 
         return response()->json([
             'message' => 'Berhasil masuk',
-            'redirect' => route('dashboard'),
+            'redirect' => auth()->user()->role == 'customer' ? route('front.home') : route('dashboard'),
         ]);
     }
 
@@ -52,6 +52,6 @@ class AuthenticatedSessionController extends Controller {
 
         $request->session()->regenerateToken();
 
-        return redirect('/dashboard/login');
+        return redirect('login');
     }
 }

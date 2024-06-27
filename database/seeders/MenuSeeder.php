@@ -18,13 +18,11 @@ class MenuSeeder extends Seeder {
 
         $menus = [
             // Front
-            ['name' => 'Cek Resi', 'url' => '/', 'route' => 'front.cek-resi', 'component' => 'front/cek-resi/Index'],
-            ['name' => 'Cek Resi', 'url' => '/track/{resi}', 'route' => 'front.cek-resi.track', 'component' => 'front/cek-resi/Index'],
-            ['name' => 'Klaim Barang Rusak', 'url' => '/klaim', 'route' => 'front.klaim', 'component' => 'front/klaim/Index'],
-
             ['name' => 'Masuk Admin', 'url' => 'dashboard/login', 'route' => 'front.auth.login-dashboard', 'component' => 'front/auth/LoginDashboard', 'shown' => false, 'middleware' => 'guest'],
 
             ['middleware' => 'auth', 'children' => [
+                ['name' => 'Home', 'url' => '/', 'route' => 'front.home', 'component' => 'front/home/Index'],
+
                 ['middleware' => 'role:admin,cabang,kurir', 'children' => [
                     ['name' => 'Overview', 'url' => 'dashboard', 'route' => 'dashboard', 'component' => 'dashboard/Index', 'icon' => 'las la-th-large fs-1'],
                     ['name' => 'Tracking', 'url' => 'dashboard/tracking', 'route' => 'dashboard.tracking', 'component' => 'dashboard/tracking/Index', 'icon' => 'las la-globe fs-1'],
@@ -40,6 +38,7 @@ class MenuSeeder extends Seeder {
                         ['name' => 'Satuan Barang', 'url' => 'dashboard/data/satuan-barang', 'route' => 'dashboard.data.satuan-barang', 'component' => 'dashboard/data/satuan-barang/Index', 'icon' => ''],
                         ['name' => 'Opsi Pengiriman', 'url' => 'dashboard/data/opsi-pengiriman', 'route' => 'dashboard.data.opsi-pengiriman', 'component' => 'dashboard/data/opsi-pengiriman/Index', 'icon' => ''],
                         ['name' => 'Tarif Kurir', 'url' => 'dashboard/data/tarif-kurir', 'route' => 'dashboard.data.tarif-kurir', 'component' => 'dashboard/data/tarif-kurir/Index', 'icon' => ''],
+                        ['name' => 'Banner', 'url' => 'dashboard/data/banner', 'route' => 'dashboard.data.banner', 'component' => 'dashboard/data/banner/Index', 'icon' => ''],
                     ]],
 
                     ['name' => 'User', 'url' => 'dashboard/user', 'route' => 'dashboard.user', 'component' => 'dashboard/user/Index', 'icon' => 'las la-users fs-1', 'children' => [

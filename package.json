@@ -36,7 +36,7 @@
     "apexcharts": "^3.37.0",
     "ckeditor5-custom-build": "file:ckeditor",
     "ckeditor5-image-remove-event-callback-plugin": "^1.2.0",
-    "daisyui": "^2.46.1",
+    "daisyui": "^4.12.10",
     "filepond": "^4.30.4",
     "filepond-plugin-file-poster": "^2.5.1",
     "filepond-plugin-file-validate-type": "^1.2.8",

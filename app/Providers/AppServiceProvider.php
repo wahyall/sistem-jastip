@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Expression;
+use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider {
     /**
@@ -23,7 +24,15 @@ class AppServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        //
+        Inertia::share([
+            'urlPrev' => function () {
+                if (url()->previous() !== route('login') && url()->previous() !== '' && url()->previous() !== url()->current()) {
+                    return url()->previous();
+                } else {
+                    return 'empty'; // used in javascript to disable back button behavior
+                }
+            },
+        ]);
     }
 }
 

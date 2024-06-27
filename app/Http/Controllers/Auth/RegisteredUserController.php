@@ -45,13 +45,13 @@ class RegisteredUserController extends Controller {
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
         Auth::login($user);
 
         return response()->json([
             'message' => 'Berhasil mendaftar',
-            'redirect' => route('dashboard'),
+            'redirect' => route('front.home'),
         ]);
     }
 }

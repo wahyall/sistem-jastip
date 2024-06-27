@@ -10,7 +10,7 @@ class Banner extends Model {
     protected $fillable = ['image', 'url'];
     protected $appends = ['image_url'];
 
-    public function getPhotoUrlAttribute() {
+    public function getImageUrlAttribute() {
         if (!isset($this->image)) return asset('assets/media/avatars/blank.png');
         else return asset($this->image);
     }

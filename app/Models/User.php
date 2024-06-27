@@ -8,7 +8,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Traits\Uuid;
 
 class User extends Authenticatable {
-    use HasApiTokens, Notifiable, Uuid;
+    use HasApiTokens, Uuid;
 
     /**
      * The attributes that are mass assignable.

@@ -13,19 +13,8 @@ class BannerController extends Controller {
         $page = (($request->page) ? $request->page - 1 : 0);
 
         DB::statement(DB::raw('set @nomor=0+' . $page * $per));
-        $data = Banner::with(['cabang'])->where(function ($q) use ($request) {
-            $q->where('name', 'LIKE', "%$request->search%");
-            $q->orWhere('email', 'LIKE', "%$request->search%");
-            $q->orWhere('phone', 'LIKE', "%$request->search%");
-            $q->orWhere('address', 'LIKE', "%$request->search%");
-
-            if ($request->kurir) {
-                $q->orWhereHas('cabang', function ($q) use ($request) {
-                    $q->where('name', 'LIKE', "%$request->search%");
-                });
-            }
-        })->when(isset($request->role), function ($q) use ($request) {
-            $q->where('role', $request->role);
+        $data = Banner::where(function ($q) use ($request) {
+            $q->where('url', 'LIKE', "%$request->search%");
         })->paginate($per, ['*', DB::raw('@nomor  := @nomor  + 1 AS nomor')]);
 
         return response()->json($data);

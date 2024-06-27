@@ -136,8 +136,8 @@ function Form({ close, selected }) {
       </div>
       <div className="card-body">
         <div className="row">
-          <div className="col-md-6">
-            <div className="mb-8">
+          <div className="col-12">
+            <div className="mb-8 multiple">
               <label className="form-label">Gambar :</label>
               <FileUpload
                 files={selected ? [...produk?.images_url] : file}

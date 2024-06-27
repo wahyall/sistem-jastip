@@ -37,7 +37,7 @@ const Login = ({ redirect }) => {
           }
         }
       },
-      onSuccess: ({ data }) => router.visit(redirect || data.redirect),
+      onSuccess: ({ data }) => router.visit(data.redirect),
     }
   );
 
@@ -99,10 +99,11 @@ const Login = ({ redirect }) => {
         </div>
         <button
           type="submit"
-          className={`btn btn-primary w-full ${isLoading && "loading"}`}
+          className={`btn btn-primary w-full`}
           disabled={isLoading}
           data-ripplet
         >
+          {isLoading && <span className="loading loading-spinner"></span>}
           Masuk
         </button>
         <div className="mt-8">

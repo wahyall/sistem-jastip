@@ -1,7 +1,7 @@
 import "./bootstrap";
 
-const frontRoutes = ["front", "login", "register", "password", "verification"];
-if (frontRoutes.includes(route().current().split(".")[0])) {
+const frontRoutes = ["front", "login", "register"];
+if (frontRoutes.includes(route().current()?.split(".")[0])) {
   import("../css/app.css");
   import("ripplet.js/es/ripplet-declarative");
 }

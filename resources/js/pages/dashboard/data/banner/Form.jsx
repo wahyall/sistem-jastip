@@ -5,6 +5,7 @@ import axios from "@/libs/axios";
 
 import { toast } from "react-toastify";
 import { Controller, useForm } from "react-hook-form";
+import FileUpload from "../../components/FileUpload";
 
 function Form({ close, selected }) {
   const [file, setFile] = useState([]);
