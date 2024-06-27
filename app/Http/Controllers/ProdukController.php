@@ -35,11 +35,11 @@ class ProdukController extends Controller {
     public function store(ProdukRequest $request) {
         $body = $request->validated();
 
-        if ($request->gambar) {
-            $body['gambar'] = 'storage/' . $request->gambar->store('produk', 'public');
+        $data = Produk::create($body);
+        foreach ($body['images'] as $file) {
+            $image = 'storage/' . $file->store('produk', 'public');
+            $data->images()->create(['image' => $image]);
         }
-
-        Produk::create($body);
 
         return response()->json([
             'message' => 'Berhasil menambahkan data',
@@ -57,14 +57,18 @@ class ProdukController extends Controller {
         $data = Produk::findByUuid($uuid);
 
         if ($request->gambar) {
-            // Delete old gambar
-            if (is_file(storage_path('app/public/' . str_replace('storage/', '', $data->gambar)))) {
-                unlink(storage_path('app/public/' . str_replace('storage/', '', $data->gambar)));
+            foreach ($data->images as $image) {
+                if (is_file(storage_path('app/public/' . str_replace('storage/', '', $image->image)))) {
+                    unlink(storage_path('app/public/' . str_replace('storage/', '', $image->image)));
+                }
             }
-            $body['gambar'] = 'storage/' . $request->gambar->store('produk', 'public');
         }
 
         $data->update($body);
+        foreach ($body['images'] as $file) {
+            $image = 'storage/' . $file->store('produk', 'public');
+            $data->images()->create(['image' => $image]);
+        }
 
         return response()->json([
             'message' => 'Berhasil memperbarui data',

@@ -66,9 +66,9 @@ function Form({ close, selected }) {
     KTApp.block("#form-produk");
 
     const formData = new FormData(document.querySelector("#form-produk"));
-    if (file[0]?.file) {
-      formData.append("gambar", file[0]?.file);
-    }
+    file.forEach((image, i) => {
+      formData.append(`images[$i]`, image.file);
+    });
 
     submit(formData);
   };
@@ -140,11 +140,9 @@ function Form({ close, selected }) {
             <div className="mb-8">
               <label className="form-label">Gambar :</label>
               <FileUpload
-                files={
-                  selected && produk?.gambar ? `${produk?.gambar_url}` : file
-                }
+                files={selected ? [...produk?.images_url] : file}
                 onupdatefiles={setFile}
-                allowMultiple={false}
+                allowMultiple={true}
                 labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
                 acceptedFileTypes={["image/*"]}
               />

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JenisPembayaranController;
 use App\Http\Controllers\KategoriBarangController;
@@ -124,6 +125,15 @@ Route::middleware(['auth'])->group(function () {
             Route::get('{uuid}/edit', [TarifKurirController::class, 'edit']);
             Route::post('{uuid}/update', [TarifKurirController::class, 'update']);
             Route::delete('{uuid}/destroy', [TarifKurirController::class, 'destroy']);
+        });
+
+        Route::group(['prefix' => 'banner'], function () {
+            Route::get('show', [BannerController::class, 'show']);
+            Route::post('paginate', [BannerController::class, 'paginate']);
+            Route::post('store', [BannerController::class, 'store']);
+            Route::get('{uuid}/edit', [BannerController::class, 'edit']);
+            Route::post('{uuid}/update', [BannerController::class, 'update']);
+            Route::delete('{uuid}/destroy', [BannerController::class, 'destroy']);
         });
     });
 

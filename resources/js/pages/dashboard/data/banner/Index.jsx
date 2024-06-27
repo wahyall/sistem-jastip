@@ -7,7 +7,6 @@ import axios from "@/libs/axios";
 
 import Form from "./Form";
 import useDelete from "@/hooks/useDelete";
-import { currency } from "@/libs/utils";
 
 const columnHelper = createColumnHelper();
 
@@ -24,7 +23,7 @@ function Index() {
 
   const { delete: handleDelete } = useDelete({
     onSuccess: () => {
-      queryClient.invalidateQueries(["/data/produk/paginate"]);
+      queryClient.invalidateQueries(["/data/banner/paginate"]);
     },
   });
 
@@ -35,53 +34,22 @@ function Index() {
         width: "25px",
       },
     }),
-    columnHelper.accessor("thumbnail", {
-      header: "Gambar",
+    columnHelper.accessor("image_url", {
+      header: "Banner",
       cell: (cell) => (
-        <div className="symbol symbol-30px symbol-md-40px">
-          <img src={cell.getValue()} alt="Foto" />
-        </div>
+        <img
+          src={cell.getValue()}
+          width={150}
+          style={{ aspectRatio: "16/9", objectFit: "cover" }}
+        />
       ),
     }),
-    columnHelper.accessor("nama", {
-      header: "Produk",
-    }),
-    columnHelper.accessor("berat", {
-      header: "Berat",
-      cell: (cell) =>
-        `${cell.getValue()} ${cell.row.original.satuan_berat.nama}`,
-    }),
-    columnHelper.accessor("volume", {
-      header: "Volume",
-      cell: (cell) =>
-        `${cell.row.original.volume_p} x ${cell.row.original.volume_l} x ${
-          cell.row.original.volume_t
-        } = ${cell.getValue()} ${cell.row.original.satuan_volume.nama}`,
-    }),
-    columnHelper.accessor("opsi_harga", {
-      header: "Harga Ekpedisi (Berat)",
+    columnHelper.accessor("url", {
+      header: "URL",
       cell: (cell) => (
-        <div>
-          {cell.getValue().map((opsi) => (
-            <div className="mb-3">
-              <strong>{opsi.nama}</strong>:
-              <span>{currency(opsi.harga_berat)}</span>
-            </div>
-          ))}
-        </div>
-      ),
-    }),
-    columnHelper.accessor("opsi_harga", {
-      header: "Harga Ekpedisi (Volume)",
-      cell: (cell) => (
-        <div>
-          {cell.getValue().map((opsi) => (
-            <div className="mb-3">
-              <strong>{opsi.nama}</strong>:
-              <span>{currency(opsi.harga_volume)}</span>
-            </div>
-          ))}
-        </div>
+        <a href={cell.getValue()} target="_blank">
+          {cell.getValue()}
+        </a>
       ),
     }),
     columnHelper.accessor("uuid", {
@@ -102,7 +70,7 @@ function Index() {
             <button
               className="btn btn-sm btn-danger btn-icon"
               onClick={useCallback(
-                () => handleDelete(`/data/produk/${cell.getValue()}/destroy`),
+                () => handleDelete(`/data/banner/${cell.getValue()}/destroy`),
                 []
               )}
             >
@@ -124,7 +92,7 @@ function Index() {
       <div className="card">
         <div className="card-header">
           <div className="card-title w-100">
-            <h1>Data Produk</h1>
+            <h1>Data Banner</h1>
             <If isTrue={!openForm}>
               <button
                 type="button"
@@ -143,7 +111,7 @@ function Index() {
           <Paginate
             id="my-table"
             columns={columns}
-            url="/data/produk/paginate"
+            url="/data/banner/paginate"
           ></Paginate>
         </div>
       </div>

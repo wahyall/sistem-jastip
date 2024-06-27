@@ -7,17 +7,16 @@ import { toast } from "react-toastify";
 import { Controller, useForm } from "react-hook-form";
 
 function Form({ close, selected }) {
+  const [file, setFile] = useState([]);
   const queryClient = useQueryClient();
-  const { data: satuanBarang } = useQuery(
-    [`/data/satuan-barang/${selected}/edit`],
+  const { data: banner } = useQuery(
+    [`/data/banner/${selected}/edit`],
     () => {
-      KTApp.block("#form-satuan-barang");
-      return axios
-        .get(`/data/satuan-barang/${selected}/edit`)
-        .then((res) => res.data);
+      KTApp.block("#form-banner");
+      return axios.get(`/data/banner/${selected}/edit`).then((res) => res.data);
     },
     {
-      onSettled: () => KTApp.unblock("#form-satuan-barang"),
+      onSettled: () => KTApp.unblock("#form-banner"),
       enabled: !!selected,
       cacheTime: 0,
     }
@@ -32,18 +31,16 @@ function Form({ close, selected }) {
     watch,
     setValue,
   } = useForm({
-    values: { ...satuanBarang },
+    values: { ...banner },
   });
   const { mutate: submit } = useMutation(
     (data) =>
       axios.post(
-        selected
-          ? `/data/satuan-barang/${selected}/update`
-          : "/data/satuan-barang/store",
+        selected ? `/data/banner/${selected}/update` : "/data/banner/store",
         data
       ),
     {
-      onSettled: () => KTApp.unblock("#form-satuan-barang"),
+      onSettled: () => KTApp.unblock("#form-banner"),
       onError: (error) => {
         for (const key in error.response.data.errors) {
           if (Object.hasOwnProperty.call(error.response.data.errors, key)) {
@@ -53,29 +50,35 @@ function Form({ close, selected }) {
       },
       onSuccess: ({ data }) => {
         toast.success(data.message);
-        queryClient.invalidateQueries(["/data/satuan-barang/paginate"]);
+        queryClient.invalidateQueries(["/data/banner/paginate"]);
         close();
       },
     }
   );
 
   const onSubmit = (data) => {
-    KTApp.block("#form-satuan-barang");
-    submit(data);
+    KTApp.block("#form-banner");
+
+    const formData = new FormData(document.querySelector("#form-banner"));
+    if (file[0]?.file) {
+      formData.append("image", file[0]?.file);
+    }
+
+    submit(formData);
   };
 
   return (
     <form
       className="card mb-12"
-      id="form-satuan-barang"
+      id="form-banner"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="card-header">
         <div className="card-title w-100">
           <h3>
-            {satuanBarang?.id
-              ? `Edit Satuan Barang: ${satuanBarang?.nama || ""}`
-              : "Tambah Satuan Barang"}
+            {banner?.id
+              ? `Edit Banner: ${banner?.nama || ""}`
+              : "Tambah Banner"}
           </h3>
           <button
             type="button"
@@ -90,21 +93,36 @@ function Form({ close, selected }) {
       <div className="card-body">
         <div className="row">
           <div className="col-12">
-            <div className="mb-4">
-              <label htmlFor="nama" className="form-label">
-                Satuan :
+            <div className="mb-8">
+              <label className="form-label">Banner :</label>
+              <FileUpload
+                files={selected ? banner?.image_url : file}
+                onupdatefiles={setFile}
+                allowMultiple={false}
+                labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+                acceptedFileTypes={["image/*"]}
+              />
+              {errors?.gambar && (
+                <label className="label-error">{errors.gambar.message}</label>
+              )}
+            </div>
+          </div>
+          <div className="col-12">
+            <div className="mb-8">
+              <label htmlFor="url" className="form-label">
+                URL (Optional) :
               </label>
               <input
                 type="text"
-                name="nama"
-                id="nama"
-                placeholder="Satuan"
+                name="url"
+                id="url"
+                placeholder="URL"
                 className="form-control required"
                 autoComplete="off"
-                {...register("nama", { required: "Satuan harus diisi" })}
+                {...register("url")}
               />
-              {errors?.nama && (
-                <label className="label-error">{errors.nama.message}</label>
+              {errors?.url && (
+                <label className="label-error">{errors.url.message}</label>
               )}
             </div>
           </div>

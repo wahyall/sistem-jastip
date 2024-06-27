@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Produk extends Model {
     use Uuid;
     protected $fillable = ['nama', 'gambar', 'deskripsi', 'berat', 'satuan_berat_id', 'volume_p', 'volume_l', 'volume_t', 'satuan_volume_id'];
-
-    protected $appends = ['gambar_url', 'volume', 'opsi_harga'];
+    protected $with = ['images'];
+    protected $appends = ['thumbnail', 'images_url', 'volume', 'opsi_harga'];
 
     public function satuan_berat() {
         return $this->belongsTo(SatuanBarang::class, 'satuan_berat_id');
@@ -19,9 +19,18 @@ class Produk extends Model {
         return $this->belongsTo(SatuanBarang::class, 'satuan_volume_id');
     }
 
-    public function getGambarUrlAttribute() {
-        if (!isset($this->gambar)) return asset('assets/media/avatars/blank.png');
-        else return asset($this->gambar);
+    public function images() {
+        return $this->hasMany(ProdukImage::class);
+    }
+
+    public function getThumbnailAttribute() {
+        return asset($this->images[0]->image);
+    }
+
+    public function getImagesUrlAttribute() {
+        return $this->images->map(function ($a) {
+            return $a->image;
+        });
     }
 
     public function getVolumeAttribute() {

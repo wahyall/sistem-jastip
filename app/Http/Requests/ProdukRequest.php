@@ -21,7 +21,8 @@ class ProdukRequest extends FormRequest {
      */
     public function rules() {
         return [
-            'gambar' => 'required|image',
+            'images' => 'required|array',
+            'images.*' => 'required|image',
             'nama' => 'required|string',
             'deskripsi' => 'required|string',
             'berat' => 'required|numeric',
