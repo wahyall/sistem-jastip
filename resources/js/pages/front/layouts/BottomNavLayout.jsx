@@ -1,3 +1,4 @@
+import { useKeranjang } from "@/services";
 import { router, usePage } from "@inertiajs/react";
 import { memo } from "react";
 
@@ -11,6 +12,8 @@ export default memo(function Index({
   function goBack() {
     router.visit(urlPrev);
   }
+
+  const { data: keranjangs = [] } = useKeranjang();
 
   return (
     <div
@@ -100,12 +103,16 @@ export default memo(function Index({
                   d="M9 6h6a3 3 0 1 0-6 0M7 6a5 5 0 0 1 10 0h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zM5 8v12h14V8zm4 2a3 3 0 1 0 6 0h2a5 5 0 0 1-10 0z"
                 />
               </svg>
-              <span className="badge badge-xs badge-error indicator-item"></span>
+              {Boolean(keranjangs.length) && (
+                <span className="badge badge-xs badge-error indicator-item text-white p-0 rounded-full h-5 w-5 flex items-center justify-center">
+                  {keranjangs.length}
+                </span>
+              )}
             </div>
           </a>
         </div>
       </nav>
-      <section className="p-2 overflow-y-auto">{children}</section>
+      <section className="p-2 overflow-y-auto pb-10">{children}</section>
       {bottomNav && (
         <nav className="btm-nav bg-base-100 relative border-t-2">
           <button className="text-primary active">

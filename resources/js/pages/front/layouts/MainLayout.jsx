@@ -17,8 +17,8 @@ const MainLayout = ({ children, auth: { user } }) => {
       </div>
       <ToastContainer
         newestOnTop={false}
-        position="bottom-right"
-        theme="dark"
+        position="top-right"
+        theme="light"
         pauseOnHover={false}
         pauseOnFocusLoss={false}
       />

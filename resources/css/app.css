@@ -21,7 +21,7 @@
     @apply rounded-md no-animation tracking-wider;
   }
 
-  .menu li > * {
+  .menu li>* {
     @apply !rounded-md;
   }
 
@@ -69,4 +69,10 @@
   .card-compact .card-header {
     @apply p-4;
   }
+}
+
+:root {
+  --rsbs-max-w: 460px;
+  --rsbs-ml: auto;
+  --rsbs-mr: auto;
 }
