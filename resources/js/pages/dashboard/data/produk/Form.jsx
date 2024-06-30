@@ -12,6 +12,11 @@ import { If } from "react-haiku";
 import Skeleton from "react-loading-skeleton";
 import { currency } from "@/libs/utils";
 
+const opsiHargaOptions = [
+  { label: "Berat", value: "berat" },
+  { label: "Volume", value: "volume" },
+];
+
 function Form({ close, selected }) {
   const queryClient = useQueryClient();
   const { data: produk } = useQuery(
@@ -140,7 +145,11 @@ function Form({ close, selected }) {
             <div className="mb-8 multiple">
               <label className="form-label">Gambar :</label>
               <FileUpload
-                files={selected ? [...produk?.images_url] : file}
+                files={
+                  selected && produk?.images_url
+                    ? [...produk?.images_url]
+                    : file
+                }
                 onupdatefiles={setFile}
                 allowMultiple={true}
                 labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
@@ -329,6 +338,33 @@ function Form({ close, selected }) {
                   )}
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="col-4">
+            <div className="mb-8">
+              <label htmlFor="berat" className="form-label">
+                Opsi Harga Berdasarkan :
+              </label>
+              <Controller
+                control={control}
+                name="opsi_harga"
+                render={({ field: { value, onChange } }) => (
+                  <Select
+                    name="opsi_harga"
+                    placeholder="Opsi Harga"
+                    options={opsiHargaOptions}
+                    hideSelectedOptions={false}
+                    value={opsiHargaOptions.find((opt) => opt.value == value)}
+                    onChange={(val) => onChange(val.value)}
+                  />
+                )}
+                rules={{ required: "Opsi Harga harus diisi" }}
+              />
+              {errors?.opsi_harga && (
+                <label className="label-error">
+                  {errors.opsi_harga.message}
+                </label>
+              )}
             </div>
           </div>
           <If isTrue={Boolean(estimasiHarga.length)}>

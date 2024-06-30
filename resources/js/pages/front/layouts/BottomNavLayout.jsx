@@ -1,5 +1,5 @@
 import { useKeranjang } from "@/services";
-import { router, usePage } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
 import { memo } from "react";
 
 export default memo(function Index({
@@ -89,7 +89,7 @@ export default memo(function Index({
           <a className="btn btn-ghost text-xl">{title}</a>
         </div>
         <div className="navbar-end">
-          <a href="#" className="btn btn-ghost btn-circle">
+          <Link href="/keranjang" className="btn btn-ghost btn-circle">
             <div className="indicator">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -109,10 +109,10 @@ export default memo(function Index({
                 </span>
               )}
             </div>
-          </a>
+          </Link>
         </div>
       </nav>
-      <section className="p-2 overflow-y-auto pb-10">{children}</section>
+      <section className="p-4 overflow-y-auto pb-10">{children}</section>
       {bottomNav && (
         <nav className="btm-nav bg-base-100 relative border-t-2">
           <button className="text-primary active">

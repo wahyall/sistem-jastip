@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Produk extends Model {
     use Uuid;
-    protected $fillable = ['nama', 'gambar', 'deskripsi', 'berat', 'satuan_berat_id', 'volume_p', 'volume_l', 'volume_t', 'satuan_volume_id'];
+    protected $fillable = ['nama', 'gambar', 'deskripsi', 'berat', 'satuan_berat_id', 'volume_p', 'volume_l', 'volume_t', 'satuan_volume_id', 'opsi_harga'];
     protected $with = ['images'];
-    protected $appends = ['thumbnail', 'images_url', 'volume', 'opsi_harga'];
+    protected $appends = ['thumbnail', 'images_url', 'volume', 'opsi_harga_pengiriman'];
 
     public function satuan_berat() {
         return $this->belongsTo(SatuanBarang::class, 'satuan_berat_id');
@@ -37,7 +37,7 @@ class Produk extends Model {
         return $this->volume_p * $this->volume_l * $this->volume_t;
     }
 
-    public function getOpsiHargaAttribute() {
+    public function getOpsiHargaPengirimanAttribute() {
         $opsi = OpsiPengiriman::with(['items'])->get()->map(function ($a) {
             // Berat
             $items = $a->items->where('satuan_barang_id', $this->satuan_berat_id);

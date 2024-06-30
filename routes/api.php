@@ -92,6 +92,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('estimasi-harga', [ProdukController::class, 'estimasiHarga']);
             Route::get('show', [ProdukController::class, 'show'])->withoutMiddleware(['role:admin']);
             Route::post('paginate', [ProdukController::class, 'paginate'])->withoutMiddleware(['role:admin']);
+            Route::get('{uuid}', [ProdukController::class, 'detail'])->withoutMiddleware(['role:admin']);
             Route::post('store', [ProdukController::class, 'store']);
             Route::get('{uuid}/edit', [ProdukController::class, 'edit']);
             Route::post('{uuid}/update', [ProdukController::class, 'update']);
@@ -147,5 +148,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['prefix' => 'keranjang'], function () {
         Route::get("/", [KeranjangController::class, 'index']);
         Route::post("/", [KeranjangController::class, 'store']);
+        Route::post("/{type}", [KeranjangController::class, 'update']);
+        Route::delete("/{uuid}", [KeranjangController::class, 'destroy']);
     });
 });

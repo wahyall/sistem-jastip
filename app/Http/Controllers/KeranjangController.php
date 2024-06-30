@@ -28,4 +28,30 @@ class KeranjangController extends Controller {
             'message' => 'Produk berhasil ditambahakan ke Keranjang'
         ]);
     }
+
+    public function update(Request $request, $type) {
+        $body = $request->validate([
+            'produk_id' => 'required|numeric',
+        ]);
+        $body['user_id'] = auth()->user()->id;
+
+        $data = Keranjang::where('user_id', auth()->user()->id)->where('produk_id', $request->produk_id)->first();
+        if ($type == "plus") $data->update(['kuantitas' => $data->kuantitas + 1]);
+        if ($type == "minus") {
+            if ($data->kuantitas == 1) $data->delete();
+            else $data->update(['kuantitas' => $data->kuantitas - 1]);
+        }
+
+        return response()->json([
+            'message' => 'Keranjang berhasil diperbarui'
+        ]);
+    }
+
+    public function destroy($uuid) {
+        Keranjang::findByUuid($uuid)->delete();
+
+        return response()->json([
+            'message' => 'Keranjang berhasil dihapus'
+        ]);
+    }
 }

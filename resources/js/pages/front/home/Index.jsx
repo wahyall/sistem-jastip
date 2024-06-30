@@ -4,7 +4,7 @@ import { useBanner, useKeranjang } from "@/services";
 import Skeleton from "react-loading-skeleton";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
-import { router } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "@/libs/axios";
@@ -110,17 +110,34 @@ export default memo(function Index() {
             <div>
               <div className="grid grid-cols-2 gap-4">
                 {produk.data.data.map((prod) => (
-                  <div className="card card-compact bg-base-100 shadow">
-                    <figure>
-                      <img src={prod.thumbnail} alt={prod.nama} />
-                    </figure>
+                  <div className="card card-compact bg-base-100 shadow overflow-hidden">
+                    <Link href={`/produk/${prod.uuid}`}>
+                      <figure>
+                        <img
+                          src={prod.thumbnail}
+                          alt={prod.nama}
+                          className="aspect-video object-cover"
+                        />
+                      </figure>
+                    </Link>
                     <div className="card-body">
-                      <h2 className="card-title">{prod.nama}</h2>
-                      <p>
-                        {currency(prod.opsi_harga[0].harga_berat)} ~{" "}
-                        {currency(prod.opsi_harga[0].harga_volume)}
-                      </p>
-                      <div className="card-actions justify-end">
+                      <Link href={`/produk/${prod.uuid}`}>
+                        <h2 className="card-title">{prod.nama}</h2>
+                        {prod.opsi_harga == "berat" ? (
+                          <p>
+                            {currency(
+                              prod.opsi_harga_pengiriman[0].harga_berat
+                            )}
+                          </p>
+                        ) : (
+                          <p>
+                            {currency(
+                              prod.opsi_harga_pengiriman[0].harga_volume
+                            )}
+                          </p>
+                        )}
+                      </Link>
+                      <div className="card-actions justify-end mt-2">
                         <button
                           className="btn btn-outline btn-primary btn-sm text-white w-full"
                           onClick={() => {
@@ -187,9 +204,12 @@ const SheetKeranjang = memo(function SheetKeranjang({ produk, onDismiss }) {
 
   return (
     <div className="p-5">
-      <img src={produk.thumbnail} className="w-full aspect-video" />
+      <img
+        src={produk.thumbnail}
+        className="w-full aspect-video object-cover"
+      />
       <h4 className="text-xl mt-4 font-bold mb-3">{produk.nama}</h4>
-      {produk.opsi_harga.map((opsi) => (
+      {produk.opsi_harga_pengiriman.map((opsi) => (
         <div
           className={`form-control rounded-lg px-4 border-2 my-2 hover:bg-primary/5 ${
             opsiId == opsi.id && "border-primary"
@@ -206,14 +226,17 @@ const SheetKeranjang = memo(function SheetKeranjang({ produk, onDismiss }) {
             />
             <div>
               <span className="label-text">{opsi.nama}</span>
-              <div className="text-sm text-slate-500">
-                {produk.berat}
-                {produk.satuan_berat.nama}: {currency(opsi.harga_berat)}
-              </div>
-              <div className="text-sm text-slate-500">
-                {produk.volume}
-                {produk.satuan_volume.nama}: {currency(opsi.harga_volume)}
-              </div>
+              {produk.opsi_harga == "berat" ? (
+                <div className="text-sm text-slate-500">
+                  {produk.berat}
+                  {produk.satuan_berat.nama}: {currency(opsi.harga_berat)}
+                </div>
+              ) : (
+                <div className="text-sm text-slate-500">
+                  {produk.volume}
+                  {produk.satuan_volume.nama}: {currency(opsi.harga_volume)}
+                </div>
+              )}
             </div>
           </label>
         </div>

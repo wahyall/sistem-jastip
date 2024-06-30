@@ -58,12 +58,12 @@ function Index() {
           cell.row.original.volume_t
         } = ${cell.getValue()} ${cell.row.original.satuan_volume.nama}`,
     }),
-    columnHelper.accessor("opsi_harga", {
+    columnHelper.accessor("opsi_harga_pengiriman", {
       header: "Harga Ekpedisi (Berat)",
       cell: (cell) => (
         <div>
           {cell.getValue().map((opsi) => (
-            <div className="mb-3">
+            <div className="mb-3" key={`berat-${opsi.id}`}>
               <strong>{opsi.nama}</strong>:
               <span>{currency(opsi.harga_berat)}</span>
             </div>
@@ -71,12 +71,12 @@ function Index() {
         </div>
       ),
     }),
-    columnHelper.accessor("opsi_harga", {
+    columnHelper.accessor("opsi_harga_pengiriman", {
       header: "Harga Ekpedisi (Volume)",
       cell: (cell) => (
         <div>
           {cell.getValue().map((opsi) => (
-            <div className="mb-3">
+            <div className="mb-3" key={`volume-${opsi.id}`}>
               <strong>{opsi.nama}</strong>:
               <span>{currency(opsi.harga_volume)}</span>
             </div>

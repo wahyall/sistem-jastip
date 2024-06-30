@@ -22,6 +22,8 @@ class MenuSeeder extends Seeder {
 
             ['middleware' => 'auth', 'children' => [
                 ['name' => 'Home', 'url' => '/', 'route' => 'front.home', 'component' => 'front/home/Index'],
+                ['name' => 'Detail Produk', 'url' => '/produk/{uuid}', 'route' => 'front.produk', 'component' => 'front/produk/Index'],
+                ['name' => 'Keranjang', 'url' => '/keranjang', 'route' => 'front.keranjang', 'component' => 'front/keranjang/Index'],
 
                 ['middleware' => 'role:admin,cabang,kurir', 'children' => [
                     ['name' => 'Overview', 'url' => 'dashboard', 'route' => 'dashboard', 'component' => 'dashboard/Index', 'icon' => 'las la-th-large fs-1'],

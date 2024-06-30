@@ -51,6 +51,11 @@ class ProdukController extends Controller {
         return response()->json($data);
     }
 
+    public function detail($uuid) {
+        $data = Produk::with(['satuan_berat', 'satuan_volume'])->where('uuid', $uuid)->first();
+        return response()->json($data);
+    }
+
     public function update(ProdukRequest $request, $uuid) {
         $body = $request->validated();
 

@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider {
                 if (url()->previous() !== route('login') && url()->previous() !== '' && url()->previous() !== url()->current()) {
                     return url()->previous();
                 } else {
-                    return 'empty'; // used in javascript to disable back button behavior
+                    return url('/'); // used in javascript to disable back button behavior
                 }
             },
         ]);
