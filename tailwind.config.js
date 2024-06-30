@@ -3,6 +3,7 @@ module.exports = {
   content: [
     "./resources/js/pages/front/**/*.{js,jsx,ts,tsx}",
     "./resources/views/front.blade.php",
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
   ],
   darkMode: "class",
   theme: {

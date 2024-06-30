@@ -25,6 +25,8 @@ class UserRequestUpdate extends FormRequest {
             'email' => 'required|email',
             'phone' => 'required|string',
             'address' => 'required|string',
+            'bio' => 'nullable|string',
+            'gender' => 'nullable|string',
             'role' => 'required|string|in:cabang,kurir',
             'cabang_id' => 'required_if:role,kurir|numeric',
             'photo' => 'nullable|image',

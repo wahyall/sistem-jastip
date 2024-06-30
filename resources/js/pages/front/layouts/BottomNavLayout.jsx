@@ -7,6 +7,7 @@ export default memo(function Index({
   title = "",
   bottomNav = true,
   back = false,
+  backUrl,
 }) {
   let { urlPrev } = usePage().props;
   function goBack() {
@@ -24,7 +25,7 @@ export default memo(function Index({
       <nav className="navbar bg-base-100 border-b-2">
         <div className="navbar-start">
           {back ? (
-            <button onClick={goBack} className="btn btn-ghost btn-circle">
+            <Link href={backUrl || "/"} className="btn btn-ghost btn-circle">
               <svg
                 className="h-6 w-6"
                 xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +46,7 @@ export default memo(function Index({
                   />
                 </g>
               </svg>
-            </button>
+            </Link>
           ) : (
             <div className="dropdown">
               <div
@@ -73,13 +74,13 @@ export default memo(function Index({
                 className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow bg-base-100"
               >
                 <li>
-                  <a>Beranda</a>
+                  <Link href="/">Beranda</Link>
                 </li>
                 <li>
-                  <a>Pesanan Saya</a>
+                  <Link href="/pesanan">Pesanan Saya</Link>
                 </li>
                 <li>
-                  <a>Profile</a>
+                  <Link href="/akun">Akun</Link>
                 </li>
               </ul>
             </div>
@@ -115,7 +116,12 @@ export default memo(function Index({
       <section className="p-4 overflow-y-auto pb-10">{children}</section>
       {bottomNav && (
         <nav className="btm-nav bg-base-100 relative border-t-2">
-          <button className="text-primary active">
+          <Link
+            href="/"
+            className={
+              route().current() == "front.home" ? "text-primary active" : ""
+            }
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -130,8 +136,13 @@ export default memo(function Index({
                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
               />
             </svg>
-          </button>
-          <button className="">
+          </Link>
+          <Link
+            href="/pesanan"
+            className={
+              route().current() == "front.pesanan" ? "text-primary active" : ""
+            }
+          >
             <svg
               className="h-6 w-6"
               xmlns="http://www.w3.org/2000/svg"
@@ -150,8 +161,13 @@ export default memo(function Index({
                 <path d="M19.194 12.843v5.324a2.056 2.056 0 0 1-2.055 2.055H6.86a2.055 2.055 0 0 1-2.056-2.055v-5.324m4.113 4.296h6.166" />
               </g>
             </svg>
-          </button>
-          <button className="">
+          </Link>
+          <Link
+            href="/akun"
+            className={
+              route().current() == "front.akun" ? "text-primary active" : ""
+            }
+          >
             <svg
               className="h-6 w-6"
               xmlns="http://www.w3.org/2000/svg"
@@ -170,7 +186,7 @@ export default memo(function Index({
                 <circle cx="12" cy="7" r="4" />
               </g>
             </svg>
-          </button>
+          </Link>
         </nav>
       )}
     </div>
