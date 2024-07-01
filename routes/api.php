@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JenisPembayaranController;
 use App\Http\Controllers\KategoriBarangController;
@@ -145,10 +147,21 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('{uuid}/destroy', [UserController::class, 'destroy']);
     });
 
-    Route::group(['prefix' => 'keranjang'], function () {
-        Route::get("/", [KeranjangController::class, 'index']);
-        Route::post("/", [KeranjangController::class, 'store']);
-        Route::post("/{type}", [KeranjangController::class, 'update']);
-        Route::delete("/{uuid}", [KeranjangController::class, 'destroy']);
+    Route::middleware(['auth'])->group(function () {
+        Route::group(['prefix' => 'keranjang'], function () {
+            Route::get("/", [KeranjangController::class, 'index']);
+            Route::post("/", [KeranjangController::class, 'store']);
+            Route::post("/{type}", [KeranjangController::class, 'update']);
+            Route::delete("/{uuid}", [KeranjangController::class, 'destroy']);
+        });
+
+        Route::group(['prefix' => 'alamat'], function () {
+            Route::get("/", [AlamatController::class, 'index']);
+            Route::post("/", [AlamatController::class, 'store']);
+            Route::put("/", [AlamatController::class, 'update']);
+            Route::delete("/{uuid}", [AlamatController::class, 'destroy']);
+        });
+
+        Route::post("checkout", [CheckoutController::class, "post"]);
     });
 });

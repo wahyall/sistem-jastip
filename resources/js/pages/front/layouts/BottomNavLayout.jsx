@@ -1,6 +1,7 @@
 import { useKeranjang } from "@/services";
 import { Link, router, usePage } from "@inertiajs/react";
 import { memo } from "react";
+import { Show } from "react-haiku";
 
 export default memo(function Index({
   children,
@@ -8,6 +9,8 @@ export default memo(function Index({
   bottomNav = true,
   back = false,
   backUrl,
+  cart = true,
+  onBack,
 }) {
   let { urlPrev } = usePage().props;
   function goBack() {
@@ -25,28 +28,63 @@ export default memo(function Index({
       <nav className="navbar bg-base-100 border-b-2">
         <div className="navbar-start">
           {back ? (
-            <Link href={backUrl || "/"} className="btn btn-ghost btn-circle">
-              <svg
-                className="h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                width="200"
-                height="200"
-                viewBox="0 0 24 24"
-              >
-                <g
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-width="1.5"
+            <Show>
+              <Show.When isTrue={Boolean(onBack)}>
+                <button
+                  type="button"
+                  onClick={onBack}
+                  className="btn btn-ghost btn-circle"
                 >
-                  <path stroke-miterlimit="10" d="M4 12h16" />
-                  <path
-                    stroke-linejoin="round"
-                    d="M11.033 4.34L4.46 10.911a1.53 1.53 0 0 0 0 2.176l6.573 6.573"
-                  />
-                </g>
-              </svg>
-            </Link>
+                  <svg
+                    className="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="200"
+                    height="200"
+                    viewBox="0 0 24 24"
+                  >
+                    <g
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-width="1.5"
+                    >
+                      <path stroke-miterlimit="10" d="M4 12h16" />
+                      <path
+                        stroke-linejoin="round"
+                        d="M11.033 4.34L4.46 10.911a1.53 1.53 0 0 0 0 2.176l6.573 6.573"
+                      />
+                    </g>
+                  </svg>
+                </button>
+              </Show.When>
+              <Show.Else>
+                <Link
+                  href={backUrl || "/"}
+                  className="btn btn-ghost btn-circle"
+                >
+                  <svg
+                    className="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="200"
+                    height="200"
+                    viewBox="0 0 24 24"
+                  >
+                    <g
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-width="1.5"
+                    >
+                      <path stroke-miterlimit="10" d="M4 12h16" />
+                      <path
+                        stroke-linejoin="round"
+                        d="M11.033 4.34L4.46 10.911a1.53 1.53 0 0 0 0 2.176l6.573 6.573"
+                      />
+                    </g>
+                  </svg>
+                </Link>
+              </Show.Else>
+            </Show>
           ) : (
             <div className="dropdown">
               <div
@@ -90,27 +128,29 @@ export default memo(function Index({
           <a className="btn btn-ghost text-xl">{title}</a>
         </div>
         <div className="navbar-end">
-          <Link href="/keranjang" className="btn btn-ghost btn-circle">
-            <div className="indicator">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                width="200"
-                height="200"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill="currentColor"
-                  d="M9 6h6a3 3 0 1 0-6 0M7 6a5 5 0 0 1 10 0h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zM5 8v12h14V8zm4 2a3 3 0 1 0 6 0h2a5 5 0 0 1-10 0z"
-                />
-              </svg>
-              {Boolean(keranjangs.length) && (
-                <span className="badge badge-xs badge-error indicator-item text-white p-0 rounded-full h-5 w-5 flex items-center justify-center">
-                  {keranjangs.length}
-                </span>
-              )}
-            </div>
-          </Link>
+          {cart && (
+            <Link href="/keranjang" className="btn btn-ghost btn-circle">
+              <div className="indicator">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  width="200"
+                  height="200"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 6h6a3 3 0 1 0-6 0M7 6a5 5 0 0 1 10 0h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zM5 8v12h14V8zm4 2a3 3 0 1 0 6 0h2a5 5 0 0 1-10 0z"
+                  />
+                </svg>
+                {Boolean(keranjangs.length) && (
+                  <span className="badge badge-xs badge-error indicator-item text-white p-0 rounded-full h-5 w-5 flex items-center justify-center">
+                    {keranjangs.length}
+                  </span>
+                )}
+              </div>
+            </Link>
+          )}
         </div>
       </nav>
       <section className="p-4 overflow-y-auto pb-10">{children}</section>

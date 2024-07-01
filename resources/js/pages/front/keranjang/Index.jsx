@@ -3,7 +3,7 @@ import BottomNavLayout from "../layouts/BottomNavLayout";
 import { useKeranjang } from "@/services";
 import Skeleton from "react-loading-skeleton";
 import { currency } from "@/libs/utils";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import { useState } from "react";
 import { useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -83,6 +83,11 @@ export default memo(function Index() {
       },
     }
   );
+
+  function checkout() {
+    sessionStorage.setItem("checkout", JSON.stringify({ selected }));
+    router.visit("/checkout");
+  }
 
   return (
     <BottomNavLayout title="Keranjang" back={true} bottomNav={false}>
@@ -218,6 +223,7 @@ export default memo(function Index() {
               disabled={!isSameEkspedisi || !selected.length}
               type="button"
               className="btn btn-primary w-full text-white"
+              onClick={checkout}
             >
               Checkout
             </button>

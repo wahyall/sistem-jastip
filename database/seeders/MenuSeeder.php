@@ -25,6 +25,11 @@ class MenuSeeder extends Seeder {
                 ['name' => 'Detail Produk', 'url' => '/produk/{uuid}', 'route' => 'front.produk', 'component' => 'front/produk/Index'],
                 ['name' => 'Keranjang', 'url' => '/keranjang', 'route' => 'front.keranjang', 'component' => 'front/keranjang/Index'],
                 ['name' => 'Pesanan', 'url' => '/pesanan', 'route' => 'front.pesanan', 'component' => 'front/pesanan/Index'],
+
+                ['name' => 'Checkout', 'url' => '/checkout', 'route' => 'front.checkout', 'component' => 'front/checkout/Index'],
+                ['name' => 'Pembayaran', 'url' => '/pembayaran/{uuid}', 'route' => 'front.pembayaran', 'component' => 'front/pembayaran/Index'],
+                ['name' => 'Konfirmasi Pembayaran', 'url' => '/pembayaran/{uuid}.konfirmasi', 'route' => 'front.pembayaran.konfirmasi', 'component' => 'front/pembayaran/konfirmasi/Index'],
+
                 ['name' => 'Akun', 'url' => '/akun', 'route' => 'front.akun', 'component' => 'front/akun/Index'],
                 ['name' => 'Edit Profile', 'url' => '/akun/edit', 'route' => 'front.akun.edit', 'component' => 'front/akun/Edit'],
 

@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 class Pengiriman extends Model {
     use Uuid;
     protected $fillable = [
-        'resi', 'cabang_id', 'customer_id', 'alamat_id', 'status',
+        'resi', 'customer_id', 'alamat_id', 'status',
         'tanggal_kirim', 'tanggal_terima', 'catatan',
-        'opsi_pengiriman_id', 'opsi_pengiriman_item_id',
-        'harga_ekspedisi', 'tarif_kurir_item_id', 'status_bayar'
+        'opsi_pengiriman_id',
+        'harga_ekspedisi', 'tarif_kurir_item_id', 'status_bayar', 'tipe_kurir'
     ];
     protected $appends = ['pembayaran'];
 
@@ -26,9 +26,9 @@ class Pengiriman extends Model {
         });
     }
 
-    public function cabang() {
-        return $this->belongsTo(User::class, 'cabang_id');
-    }
+    // public function cabang() {
+    //     return $this->belongsTo(User::class, 'cabang_id');
+    // }
 
     public function customer() {
         return $this->belongsTo(User::class, 'customer_id');
@@ -38,9 +38,9 @@ class Pengiriman extends Model {
         return $this->belongsTo(OpsiPengiriman::class);
     }
 
-    public function opsi_pengiriman_item() {
-        return $this->belongsTo(OpsiPengirimanItem::class);
-    }
+    // public function opsi_pengiriman_item() {
+    //     return $this->belongsTo(OpsiPengirimanItem::class);
+    // }
 
     public function tarif_kurir_item() {
         return $this->belongsTo(TarifKurirItem::class);
@@ -54,22 +54,29 @@ class Pengiriman extends Model {
         return $this->hasMany(Pembayaran::class);
     }
 
+    public function items() {
+        return $this->hasMany(PengirimanItem::class);
+    }
+
     public static function genResi() {
-        $resi = 'S';
-        $last = Pengiriman::whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->orderBy('resi', 'DESC')->first();
+        // Format = KDC20240806001
+        $resi = 'KDC';
+        $last = Pengiriman::where('created_at', date('Y-m-d'))->orderBy('resi', 'DESC')->first();
 
         if (!$last) {
             $resi .= date('Y');
             $resi .= date('m');
-            $resi .= str_pad(1, 5, 0, STR_PAD_LEFT);
+            $resi .= date('d');
+            $resi .= str_pad(1, 3, 0, STR_PAD_LEFT);
 
             return $resi;
         } else {
-            $nomor = (int)substr($last->resi, 7) + 1;
-            $nomor = str_pad($nomor, 5, 0, STR_PAD_LEFT);
+            $nomor = (int)substr($last->resi, 11) + 1;
+            $nomor = str_pad($nomor, 3, 0, STR_PAD_LEFT);
 
             $resi .= date('Y');
             $resi .= date('m');
+            $resi .= date('d');
             $resi .= $nomor;
 
             return $resi;

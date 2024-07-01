@@ -76,7 +76,7 @@ function Form({ close, selected }) {
     submit(data);
   };
 
-  console.log(watch());
+  // console.log(watch());
 
   const { data: provinces = [], isLoading: isProvincesLoading } = useProvince();
   const provinceOptions = useMemo(

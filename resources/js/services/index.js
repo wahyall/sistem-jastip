@@ -7,3 +7,4 @@ export { useKurir } from "./useKurir";
 export { useSatuanBarang } from "./useSatuanBarang";
 export { useBanner } from "./useBanner";
 export { useKeranjang } from "./useKeranjang";
+export { useAlamat } from "./useAlamat";

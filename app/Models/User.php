@@ -41,4 +41,9 @@ class User extends Authenticatable {
         // Untuk Kurir
         return $this->belongsTo(User::class, 'cabang_id');
     }
+
+    public function alamats() {
+        // Untuk Custoemr
+        return $this->hasOne(Alamat::class);
+    }
 }
